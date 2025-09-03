@@ -7,8 +7,8 @@
 .buildlog/
 .history
 
-.key
-.cert
+*.key
+*.cert
 
 
 
