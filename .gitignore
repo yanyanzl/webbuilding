@@ -7,6 +7,9 @@
 .buildlog/
 .history
 
+.key
+.cert
+
 
 
 # Flutter repo-specific
