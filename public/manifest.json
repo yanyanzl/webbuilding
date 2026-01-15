@@ -1,14 +1,14 @@
 
 
 {
-  "short_name": "AstrologyApp",
-  "name": "Mystical Astrology Web App",
-  "icons": [
-    { "src": "/icons/icon-192.png", "type": "image/png", "sizes": "192x192" },
-    { "src": "/icons/icon-512.png", "type": "image/png", "sizes": "512x512" }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#1e293b",
-  "background_color": "#000000"
+"short_name": "Astrology",
+"name": "Mystical Astrology",
+"icons": [
+{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+{ "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+],
+"start_url": ".",
+"display": "standalone",
+"theme_color": "#020617",
+"background_color": "#020617"
 }
