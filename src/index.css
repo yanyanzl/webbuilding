@@ -1,0 +1,78 @@
+
+/* index.css for Mystical Astrology PWA */
+
+/* Tailwind CSS base (if using Tailwind via CDN or PostCSS) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom mystical styling */
+body {
+  background: linear-gradient(to bottom, #000000, #1e293b, #000000);
+  color: #cbd5e1; /* Indigo-200 */
+  font-family: 'Georgia', serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  font-family: 'Georgia', serif;
+  color: #f8fafc; /* Light text for headers */
+}
+
+button {
+  background-color: #4f46e5; /* Indigo-600 */
+  color: #f8fafc;
+  border: none;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #6366f1; /* Indigo-500 */
+}
+
+input, select {
+  background-color: rgba(0,0,0,0.4);
+  border: 1px solid #3730a3; /* Indigo-800 */
+  color: #f8fafc;
+  border-radius: 8px;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.card {
+  background-color: rgba(79, 70, 229, 0.2); /* Indigo-700/20 */
+  padding: 1rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  margin-bottom: 1rem;
+}
+
+.text-mystic {
+  color: #c7d2fe; /* Indigo-200 */
+}
+
+/* Scrollbar styling for mystical feel */
+body::-webkit-scrollbar {
+  width: 8px;
+}
+body::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #4f46e5;
+  border-radius: 4px;
+}
+
+/* Utility classes */
+.mt-2 { margin-top: 0.5rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.p-2 { padding: 0.5rem; }
+.p-5 { padding: 1.25rem; }
+.rounded-xl { border-radius: 1rem; }
+.rounded-2xl { border-radius: 1.5rem; }
+.shadow { box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+.text-center { text-align: center; }
