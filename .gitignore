@@ -10,7 +10,7 @@
 *.key
 *.cert
 
-
+node_modules/
 
 # Flutter repo-specific
 /bin/cache/
