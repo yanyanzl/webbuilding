@@ -1,81 +1,99 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+return aspects;
+}
+
+
+// ------------------ Chart Wheel ------------------
+function ChartWheel({ planets, houses }) {
+return (
+<svg viewBox="0 0 220 220" className="mx-auto w-72 h-72">
+<circle cx="110" cy="110" r="105" stroke="#7c3aed" strokeWidth="2" fill="none" />
+{SIGNS.map((s, i) => {
+const a = (i * 30 - 90) * Math.PI / 180;
+return <text key={s} x={110 + 85 * Math.cos(a)} y={110 + 85 * Math.sin(a)} fontSize="8" fill="#c7d2fe" textAnchor="middle">{s}</text>;
+})}
+{houses.map((h, i) => {
+const a = (i * 30 - 90) * Math.PI / 180;
+return <line key={i} x1="110" y1="110" x2={110 + 105 * Math.cos(a)} y2={110 + 105 * Math.sin(a)} stroke="#334155" />;
+})}
+{planets.map((p, i) => {
+const idx = SIGNS.indexOf(p.sign);
+const a = (idx * 30 - 90) * Math.PI / 180;
+return <circle key={i} cx={110 + 65 * Math.cos(a)} cy={110 + 65 * Math.sin(a)} r="4" fill="#fde68a" />;
+})}
+</svg>
+);
+}
 
 
 export default function App() {
-const [revealed, setRevealed] = useState(false);
+const [birthdate, setBirthdate] = useState('');
+const [time, setTime] = useState('12:00');
+const [profile, setProfile] = useState(null);
 
 
-const user = {
-sun: 'Pisces',
-moon: 'Cancer',
-rising: 'Libra'
-};
+function generate() {
+const sun = getSunSign(birthdate);
+const moon = getMoonSign(birthdate);
+const rising = getRisingSign(time);
+const houses = getHouses(rising);
+const planets = PLANETS.map(name => ({ name, sign: name === 'Sun' ? sun : name === 'Moon' ? moon : houses[Math.floor(Math.random()*12)] }));
+const aspects = getAspects(planets);
+const data = { sun, moon, rising, houses, planets, aspects };
+localStorage.setItem('astro-profile', JSON.stringify(data));
+setProfile(data);
+}
 
 
-const personalizedReading = `As a ${user.sun} Sun, you are guided by intuition and compassion. Your ${user.moon} Moon reveals deep emotional tides beneath the surface, while your ${user.rising} Rising lends grace and harmony to how you move through the world. This is a period of inner alignment — trust the quiet signals guiding you forward.`;
-
-
-const tarot = {
-name: 'The High Priestess',
-meaning: 'Inner wisdom is speaking quietly. Trust your intuition and allow hidden truths to surface.'
-};
+useEffect(() => {
+const saved = localStorage.getItem('astro-profile');
+if (saved) setProfile(JSON.parse(saved));
+}, []);
 
 
 return (
-<div className="max-w-3xl mx-auto px-4 pb-20">
-{/* Hero */}
-<div className="text-center my-16 fade-in">
-<h1 className="text-4xl mb-4">Mystical Astrology</h1>
-<p className="text-indigo-300">Your daily guidance — written in the stars.</p>
-</div>
+<div className="max-w-3xl mx-auto px-4 pb-24">
+<header className="text-center my-16">
+<h1 className="text-4xl">Mystical Astrology</h1>
+<p className="text-indigo-300">Professional natal chart analysis</p>
+</header>
 
 
-{/* Personalized Reading */}
-<div className="card fade-in">
-<h2 className="mb-2">🌟 Your Personalized Reading</h2>
-<p className="text-mystic">{personalizedReading}</p>
-</div>
-
-
-{/* Daily Horoscope */}
-<div className="card fade-in">
-<h2 className="mb-2">✨ Today’s Horoscope</h2>
-<p className="text-mystic">
-A subtle energetic shift encourages reflection and emotional honesty. Move slowly and trust what feels aligned.
-</p>
-</div>
-
-
-{/* Tarot Card */}
-<div className="card text-center fade-in">
-<h2 className="mb-4">🎴 Daily Tarot</h2>
-{!revealed ? (
-<button onClick={() => setRevealed(true)}>Reveal Today’s Card</button>
-) : (
-<div className="fade-in">
-<h3 className="mt-4">{tarot.name}</h3>
-<p className="text-indigo-300 mt-2">{tarot.meaning}</p>
-<button
-className="mt-4"
-onClick={() => navigator.share?.({ title: 'My Tarot Reading', text: tarot.meaning })}
->
-Share Today’s Reading ✨
-</button>
+{!profile && (
+<div className="card">
+<h2>Birth Data</h2>
+<input type="date" className="w-full mb-3" onChange={e => setBirthdate(e.target.value)} />
+<input type="time" className="w-full mb-4" onChange={e => setTime(e.target.value)} />
+<button onClick={generate}>Generate Full Chart</button>
 </div>
 )}
+
+
+{profile && (
+<>
+<div className="card">
+<h2>Natal Chart</h2>
+<ChartWheel planets={profile.planets} houses={profile.houses} />
+<p className="text-mystic">☉ {profile.sun} ☽ {profile.moon} ↑ {profile.rising}</p>
 </div>
 
 
-{/* Astrology Calendar */}
-<div className="card fade-in">
-<h2 className="mb-2">🌙 Astrology Calendar</h2>
+<div className="card">
+<h2>Planetary Aspects</h2>
 <ul className="text-indigo-300">
-<li>Jan 25 – Full Moon in Leo</li>
-<li>Feb 9 – New Moon in Aquarius</li>
-<li>Mar 20 – Spring Equinox</li>
-<li>Apr 4 – Mercury Retrograde Begins</li>
+{profile.aspects.map(a => <li key={a}>{a}</li>)}
 </ul>
 </div>
+
+
+<div className="card">
+<h2>House System</h2>
+<ul className="text-indigo-300">
+{profile.houses.map((h, i) => <li key={i}>House {i+1}: {h}</li>)}
+</ul>
+</div>
+</>
+)}
 </div>
 );
 }
