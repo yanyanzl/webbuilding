@@ -5,6 +5,16 @@ export default function App() {
 const [revealed, setRevealed] = useState(false);
 
 
+const user = {
+sun: 'Pisces',
+moon: 'Cancer',
+rising: 'Libra'
+};
+
+
+const personalizedReading = `As a ${user.sun} Sun, you are guided by intuition and compassion. Your ${user.moon} Moon reveals deep emotional tides beneath the surface, while your ${user.rising} Rising lends grace and harmony to how you move through the world. This is a period of inner alignment — trust the quiet signals guiding you forward.`;
+
+
 const tarot = {
 name: 'The High Priestess',
 meaning: 'Inner wisdom is speaking quietly. Trust your intuition and allow hidden truths to surface.'
@@ -20,11 +30,18 @@ return (
 </div>
 
 
-{/* Horoscope Card */}
+{/* Personalized Reading */}
+<div className="card fade-in">
+<h2 className="mb-2">🌟 Your Personalized Reading</h2>
+<p className="text-mystic">{personalizedReading}</p>
+</div>
+
+
+{/* Daily Horoscope */}
 <div className="card fade-in">
 <h2 className="mb-2">✨ Today’s Horoscope</h2>
 <p className="text-mystic">
-A subtle shift in energy invites reflection. Move gently and listen closely to your inner rhythm.
+A subtle energetic shift encourages reflection and emotional honesty. Move slowly and trust what feels aligned.
 </p>
 </div>
 
@@ -40,7 +57,7 @@ A subtle shift in energy invites reflection. Move gently and listen closely to y
 <p className="text-indigo-300 mt-2">{tarot.meaning}</p>
 <button
 className="mt-4"
-onClick={() => navigator.share({ title: 'My Tarot Reading', text: tarot.meaning })}
+onClick={() => navigator.share?.({ title: 'My Tarot Reading', text: tarot.meaning })}
 >
 Share Today’s Reading ✨
 </button>
@@ -49,13 +66,14 @@ Share Today’s Reading ✨
 </div>
 
 
-{/* Calendar Card */}
+{/* Astrology Calendar */}
 <div className="card fade-in">
 <h2 className="mb-2">🌙 Astrology Calendar</h2>
 <ul className="text-indigo-300">
 <li>Jan 25 – Full Moon in Leo</li>
 <li>Feb 9 – New Moon in Aquarius</li>
 <li>Mar 20 – Spring Equinox</li>
+<li>Apr 4 – Mercury Retrograde Begins</li>
 </ul>
 </div>
 </div>
