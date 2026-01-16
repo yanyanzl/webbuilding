@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import ChartWheel from "./ChartWheel"; // your existing wheel component
 
+/*
 const API_URL = import.meta.env.VITE_ASTRO_API
-  || "https://astro-backend-xh5v.onrender.com";
+ || "https://astro-backend-xh5v.onrender.com";
+*/
+const API_URL = "https://astro-backend-xh5v.onrender.com";
+
+
 
 // ---------- Helpers ----------
 const SIGNS = [
