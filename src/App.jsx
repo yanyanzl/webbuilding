@@ -1,7 +1,62 @@
 import { useEffect, useState } from 'react';
-return aspects;
+
+
+const SIGNS = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+const PLANETS = ['Sun','Moon','Mercury','Venus','Mars'];
+
+
+// ------------------ Astrology Math ------------------
+function getSunSign(d) {
+const date = new Date(d);
+const m = date.getMonth() + 1;
+const day = date.getDate();
+if ((m === 3 && day >= 21) || (m === 4 && day <= 19)) return 'Aries';
+if ((m === 4 && day >= 20) || (m === 5 && day <= 20)) return 'Taurus';
+if ((m === 5 && day >= 21) || (m === 6 && day <= 20)) return 'Gemini';
+if ((m === 6 && day >= 21) || (m === 7 && day <= 22)) return 'Cancer';
+if ((m === 7 && day >= 23) || (m === 8 && day <= 22)) return 'Leo';
+if ((m === 8 && day >= 23) || (m === 9 && day <= 22)) return 'Virgo';
+if ((m === 9 && day >= 23) || (m === 10 && day <= 22)) return 'Libra';
+if ((m === 10 && day >= 23) || (m === 11 && day <= 21)) return 'Scorpio';
+if ((m === 11 && day >= 22) || (m === 12 && day <= 21)) return 'Sagittarius';
+if ((m === 12 && day >= 22) || (m === 1 && day <= 19)) return 'Capricorn';
+if ((m === 1 && day >= 20) || (m === 2 && day <= 18)) return 'Aquarius';
+return 'Pisces';
 }
 
+
+function getMoonSign(d) {
+const days = Math.floor((new Date(d) - new Date('2000-01-01')) / 86400000);
+return SIGNS[(days % 12 + 12) % 12];
+}
+
+function getRisingSign(time) {
+const hour = parseInt(time.split(':')[0] || '12');
+return SIGNS[(hour + 6) % 12];
+}
+
+
+function getHouses(rising) {
+const start = SIGNS.indexOf(rising);
+return Array.from({ length: 12 }, (_, i) => SIGNS[(start + i) % 12]);
+}
+
+
+function getAspects(planets) {
+const aspects = [];
+for (let i = 0; i < planets.length; i++) {
+for (let j = i + 1; j < planets.length; j++) {
+const a = SIGNS.indexOf(planets[i].sign);
+const b = SIGNS.indexOf(planets[j].sign);
+const diff = Math.abs(a - b);
+if (diff === 0) aspects.push(`${planets[i].name} conjunct ${planets[j].name}`);
+if (diff === 4) aspects.push(`${planets[i].name} trine ${planets[j].name}`);
+if (diff === 6) aspects.push(`${planets[i].name} opposite ${planets[j].name}`);
+if (diff === 3) aspects.push(`${planets[i].name} square ${planets[j].name}`);
+}
+}
+return aspects;
+}
 
 // ------------------ Chart Wheel ------------------
 function ChartWheel({ planets, houses }) {
@@ -67,7 +122,6 @@ return (
 <button onClick={generate}>Generate Full Chart</button>
 </div>
 )}
-
 
 {profile && (
 <>
